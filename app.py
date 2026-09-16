@@ -44,4 +44,4 @@ if submitted:
         st.success("Prediction: No Dementia")
     if hasattr(model, "predict_proba"):
         probability = float(model.predict_proba(input_df)[0][1])
-        st.write(f"Model probability for Dementia: **{probability:.2%}**")
+        st.write(f"Model probability for Dementia: **{probability:.2%}**")         
