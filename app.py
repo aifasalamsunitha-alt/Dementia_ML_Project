@@ -1,10 +1,8 @@
-
-   from pathlib import Path
+from pathlib import Path
 import joblib
 import pandas as pd
 import streamlit as st
 
-# scikit-learn imports for on-the-fly model fallback
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
@@ -20,7 +18,6 @@ st.title("🧠 Dementia Classification")
 st.caption("Educational machine-learning demonstration — not a medical diagnosis")
 
 def build_and_save_model(df_path, model_path):
-    """Trains a fresh model matched to the current runtime environment."""
     df = pd.read_csv(df_path).drop_duplicates().reset_index(drop=True)
     X = df.drop(columns="Dementia")
     y = df["Dementia"]
@@ -53,7 +50,6 @@ def load_or_train_model():
         try:
             return joblib.load(MODEL_PATH)
         except Exception:
-            # Re-train if unpickling fails due to version mismatch
             return build_and_save_model(DATA_PATH, MODEL_PATH)
     else:
         return build_and_save_model(DATA_PATH, MODEL_PATH)
